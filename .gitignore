@@ -11,3 +11,4 @@ pom.xml
 *.ipr
 *.iws
 target
+src/test/resources/settings.clj

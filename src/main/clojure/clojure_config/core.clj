@@ -7,7 +7,8 @@
   [file key] (-> key ((load-config file))))
 
 (defn set-value
-  [file key value] (-> (load-config file) (assoc key value)))
+  [file key value & {:keys [persist?] :or {persist? true}}]
+  (-> (load-config file) (assoc key value)))
 
 (defn remove-key
   [file key] (-> (load-config file) (dissoc key)))

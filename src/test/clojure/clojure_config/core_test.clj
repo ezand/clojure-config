@@ -1,8 +1,12 @@
 (ns clojure-config.core-test
   (:require [clojure.test :refer :all ]
-            [clojure-config.core :refer :all :as c]))
+            [clojure-config.core :refer :all :as c]
+            [me.raynes.fs :as fs]))
 
-(def ^:private config-file "src/test/resources/settings.clj")
+(def ^:private config-file
+  (let [base-path "src/test/resources/"] (fs/copy (str base-path "settings_source.clj") (str base-path "settings.clj"))))
+
+(prn config-file)
 
 (deftest test-read-config
   (testing "Reading configuration"
@@ -14,7 +18,7 @@
 (deftest test-read-value
   (testing "Reading value"
     (let [conf (load-config config-file)]
-      (is (= "bar" (get-value config-file :foo))))))
+      (is (= "bar" (get-value config-file :foo ))))))
 
 (deftest test-update-value
   (testing "Updating configuration"
@@ -25,6 +29,6 @@
 
 (deftest test-remove-key
   (testing "Removing key"
-    (let [conf (remove-key config-file :x)]
-      (not (contains? conf :x))
+    (let [conf (remove-key config-file :x )]
+      (not (contains? conf :x ))
       (is (= nil (:x conf))))))
